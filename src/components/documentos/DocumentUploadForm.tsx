@@ -20,9 +20,11 @@ interface DocumentUploadFormProps {
   onSubmit: (data: DocumentoUploadInput) => void;
   onCancel?: () => void;
   isLoading?: boolean;
+  /** Precarga el cliente cuando se sube desde dentro de su carpeta. */
+  clienteIdInicial?: string;
 }
 
-export function DocumentUploadForm({ onSubmit, onCancel, isLoading }: DocumentUploadFormProps) {
+export function DocumentUploadForm({ onSubmit, onCancel, isLoading, clienteIdInicial }: DocumentUploadFormProps) {
   const {
     register,
     handleSubmit,
@@ -30,7 +32,7 @@ export function DocumentUploadForm({ onSubmit, onCancel, isLoading }: DocumentUp
     formState: { errors },
   } = useForm<DocumentoUploadInput>({
     resolver: zodResolver(documentoUploadSchema),
-    defaultValues: { tipo: "pdf" },
+    defaultValues: { tipo: "pdf", cliente_id: clienteIdInicial },
   });
 
   return (
