@@ -8,6 +8,8 @@ import {
   Kanban,
   LayoutDashboard,
   ListTodo,
+  MessageSquare,
+  UserCog,
   Users,
   type LucideIcon,
 } from "lucide-react";
@@ -29,6 +31,8 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/calendario", label: "Calendario", icon: Calendar },
   { href: "/reportes", label: "Reportes", icon: BarChart3 },
   { href: "/documentos", label: "Documentos", icon: FolderOpen },
+  { href: "/equipo", label: "Equipo", icon: UserCog },
+  { href: "/chat", label: "Chat", icon: MessageSquare },
 ];
 
 export function AppSidebar() {

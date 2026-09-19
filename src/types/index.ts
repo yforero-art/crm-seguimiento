@@ -7,6 +7,7 @@ import {
   estadoClienteEnum,
   estadoTareaEnum,
   etapaOportunidadEnum,
+  mensajes,
   notificaciones,
   oportunidades,
   origenClienteEnum,
@@ -67,3 +68,6 @@ export type Notificacion = InferSelectModel<typeof notificaciones>;
 export type NewNotificacion = InferInsertModel<typeof notificaciones>;
 
 export type ActividadLog = InferSelectModel<typeof actividadLog>;
+
+export type Mensaje = InferSelectModel<typeof mensajes>;
+export type NewMensaje = InferInsertModel<typeof mensajes>;

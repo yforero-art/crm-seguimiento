@@ -19,6 +19,9 @@ interface TaskFormProps {
   onSubmit: (data: TareaInput) => void;
   onCancel?: () => void;
   isLoading?: boolean;
+  /** Precarga el responsable en modo creación (ej. desde el tablero de Equipo),
+   * sin que el formulario piense que está editando una tarea existente. */
+  responsableIdInicial?: string;
 }
 
 // El <input type="date"> nativo entrega/espera "YYYY-MM-DD". Si ese string se
@@ -54,7 +57,7 @@ function toDefaultValues(tarea?: Tarea): Partial<TareaInput> {
   };
 }
 
-export function TaskForm({ tarea, onSubmit, onCancel, isLoading }: TaskFormProps) {
+export function TaskForm({ tarea, onSubmit, onCancel, isLoading, responsableIdInicial }: TaskFormProps) {
   const {
     register,
     handleSubmit,
@@ -62,7 +65,7 @@ export function TaskForm({ tarea, onSubmit, onCancel, isLoading }: TaskFormProps
     formState: { errors },
   } = useForm<TareaInput>({
     resolver: zodResolver(tareaSchema),
-    defaultValues: toDefaultValues(tarea),
+    defaultValues: { ...toDefaultValues(tarea), ...(responsableIdInicial ? { responsable_id: responsableIdInicial } : {}) },
   });
 
   return (

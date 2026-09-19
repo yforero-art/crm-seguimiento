@@ -207,6 +207,24 @@ export const documentos = pgTable(
   })
 );
 
+export const mensajes = pgTable(
+  "mensajes",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    // Un solo canal general por ahora (chat de equipo) — no hay mensajes
+    // directos (DM) todavía; se puede agregar un `canal`/`destinatario_id`
+    // más adelante sin romper esta tabla.
+    usuario_id: uuid("usuario_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    contenido: text("contenido").notNull(),
+    created_at: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => ({
+    createdAtIdx: index("idx_mensajes_created_at").on(table.created_at),
+  })
+);
+
 export const notificaciones = pgTable(
   "notificaciones",
   {
@@ -251,6 +269,11 @@ export const usersRelations = relations(users, ({ many }) => ({
   tareasAsignadas: many(tareas),
   seguimientosRegistrados: many(seguimientos),
   documentosSubidos: many(documentos),
+  mensajesEnviados: many(mensajes),
+}));
+
+export const mensajesRelations = relations(mensajes, ({ one }) => ({
+  usuario: one(users, { fields: [mensajes.usuario_id], references: [users.id] }),
 }));
 
 export const clientesRelations = relations(clientes, ({ one, many }) => ({
